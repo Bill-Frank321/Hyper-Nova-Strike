@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scientific Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    nav {
+  background: #4b0082;
+  padding: 10px;
+}
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      display: block;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      background: rgba(255,255,255,0.2);
+      border-radius: 5px;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #444;
+      min-width: 150px;
+      border-radius: 5px;
+      z-index: 1000;
+    }
+
+    .dropdown-content li a {
+      padding: 10px;
+      color: white;
+    }
+
+    .dropdown-content li a:hover {
+      background: #667eea;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    .calc {
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      text-align: center;
+      width: 270px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    input {
+      width: 220px;
+      height: 45px;
+      margin-bottom: 15px;
+      text-align: right;
+      font-size: 18px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      padding-right: 10px;
+    }
+    button {
+      width: 55px;
+      height: 45px;
+      margin: 4px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background: #667eea;
+      color: #fff;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #764ba2;
+      transform: scale(1.05);
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+   <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact us</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li class="dropdown">
+        <a href="#">Calculator ▼</a>
+        <ul class="dropdown-content">
+          <li><a href="simple.html">Simple</a></li>
+          <li><a href="scientific.html">Scientific</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  <div class="calc">
+  <input type="text" id="display" readonly>
+  <button onclick="clearDisplay()">C</button>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <button onclick="deleteLast()">⌫</button>
+  <button onclick="appendNumber('7')">7</button>
+  <button onclick="appendNumber('8')">8</button>
+  <button onclick="appendNumber('9')">9</button>
+  <button onclick="appendOperator('/')">/</button>
+  <br>
+  <button onclick="appendNumber('4')">4</button>
+  <button onclick="appendNumber('5')">5</button>
+  <button onclick="appendNumber('6')">6</button>
+  <button onclick="appendOperator('*')">*</button>
+  <br>
+  <button onclick="appendNumber('1')">1</button>
+  <button onclick="appendNumber('2')">2</button>
+  <button onclick="appendNumber('3')">3</button>
+  <button onclick="appendOperator('-')">-</button>
+  <br>
+  <button onclick="appendNumber('0')">0</button>
+  <button onclick="appendOperator('.')">.</button>
+  <button onclick="calculate()">=</button>
+  <button onclick="appendOperator('+')">+</button>
+  <br>
+
+  <button onclick="scientific('sqrt')">√</button>
+  <button onclick="scientific('sin')">sin</button>
+  <button onclick="scientific('cos')">cos</button>
+  <button onclick="scientific('tan')">tan</button>
+  </div>
+
+  <script>
+    let display = document.getElementById('display');
+
+function appendNumber(num) {
+  display.value += num;
+}
+
+function appendOperator(op) {
+  display.value += op;
+}
+
+function clearDisplay() {
+  display.value = '';
+}
+
+function deleteLast() {
+  display.value = display.value.slice(0, -1);
+}
+
+function calculate() {
+  try {
+    display.value = eval(display.value);
+  } catch {
+    display.value = 'Error';
+  }
+}
+
+function scientific(func) {
+  let value = parseFloat(display.value);
+  if (isNaN(value)) return;
+
+  switch(func) {
+    case 'sqrt':
+      display.value = Math.sqrt(value);
+      break;
+    case 'sin':
+      display.value = Math.sin(value);
+      break;
+    case 'cos':
+      display.value = Math.cos(value);
+      break;
+    case 'tan':
+      display.value = Math.tan(value);
+      break;
+  }
+}
+  </script>
+</body>
+</html>
